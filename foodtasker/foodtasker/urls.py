@@ -22,5 +22,4 @@ from foodtasker import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include ('foodtaskerapp.urls')),
-]
-
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
