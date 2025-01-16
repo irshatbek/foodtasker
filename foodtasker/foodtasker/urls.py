@@ -18,8 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from foodtasker import settings
+from django.contrib.auth import views as auth_views
+from foodtaskerapp import views, apis
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include ('foodtaskerapp.urls')),
+    path('restaurant/sign-in/', auth_views.LoginView.as_view(template_name='restaurant/sign_in.html'), name='restaurant-sign-in'),
+    path('restaurant/sign-out/', auth_views.LogoutView.as_view(next_page='/'), name='restaurant-sign-out'),
+    path('restaurant/sign-up/', views.restaurant_sign_up, name='restaurant-sign-up'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
