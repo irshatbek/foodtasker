@@ -24,10 +24,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include ('foodtaskerapp.urls')),
-    # path('restaurant/sign-in/', auth_views.LoginView.as_view(template_name='restaurant/sign_in.html'), name='restaurant-sign-in'),
-    # path('restaurant/sign-out/', auth_views.LogoutView.as_view(next_page='/'), name='restaurant-sign-out'),
-    # path('restaurant/sign-up/', views.restaurant_sign_up, name='restaurant-sign-up'),
+        path('', include ('accounts.urls')),
 ]
-
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

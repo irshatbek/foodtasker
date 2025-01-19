@@ -1,0 +1,13 @@
+{% extends "base_signup.html" %}
+
+{% block title %}Sigh-in{% endblock %}
+{% block heading %} Restaurant - Sigh-in {% endblock %}
+{% block content %}
+    {% block page %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Sigh-in</button>
+    </form>
+    {% endblock %}
+{% endblock %}
