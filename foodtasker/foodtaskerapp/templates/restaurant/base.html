@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Restaurant {% endblock %}
+
+{% block sidebar %}
+
+  Restaurant, Hi {{ request.user }}
+  <hr/>
+
+  <a href="{% url "account" %}">Account</a>
+  -
+  <a href="{% url "meal" %}">Meal</a>
+  -
+  <a href="{% url "order" %}">Order</a>
+
+
+  {% endblock %}
