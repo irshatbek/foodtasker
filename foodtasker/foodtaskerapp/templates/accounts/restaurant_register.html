@@ -4,11 +4,11 @@
 {% block heading %} Restaurant - Sigh-up {% endblock %}
 {% block content %}
     {% block page %}
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form }}
         {{ restaurant_form }}
-        <button type="submit">Sigh-up</button>
+        <button type="submit" class="btn btn-pink pull-right">Sigh-up</button>
     </form>
     {% endblock %}
 {% endblock %}

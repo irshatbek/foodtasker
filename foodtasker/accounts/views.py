@@ -4,10 +4,15 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from .models import Restaurant
 from django.contrib.auth.decorators import login_required
+from .forms import *
+from django.contrib.auth import authenticate, login
+
+
 
 # Create your views here.
 
-def login(request):
+def log_in(request):
+    
     if request.method == 'POST':
         user = request.POST['user']
         password = request.POST['password']
@@ -24,35 +29,27 @@ def login(request):
     return render(request, 'accounts/restaurant_log_in.html')
 
 def register(request):
+    user_form = UserForm()
+    restaurant_form = RestaurantForm()
     if request.method == 'POST':
-        firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
+        user_form = UserForm(request.POST)
+        restaurant_form = RestaurantForm(request.POST, request.FILES)
+        
+        if user_form.is_valid() and restaurant_form.is_valid():
+            new_user=User.objects.create_user(**user_form.cleaned_data)
+            new_restaurant = restaurant_form.save(commit=False)
+            new_restaurant.user = new_user
+            new_restaurant.save
+            
+            login(request, authenticate(
+                username = user_form.cleaned_data["username"],
+                password = user_form.cleaned_data["password"]
+            ))
+            
+            return redirect(log_in)
 
-        if password == confirm_password:
-            if User.objects.filter(username=username).exists():
-                messages.error(request, 'Username already exists!')
-                return redirect('register')
-            else:
-                if User.objects.filter(email=email).exists():
-                    messages.error(request, 'Email already exists!')
-                    return redirect('register')
-                else:
-                    user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, username=username, password=password)
-                    auth.login(request, user)
-                    messages.success(request, 'You are now logged in.')
-                    return redirect('dashboard')
-                    user.save()
-                    messages.success(request, 'You are registered successfully.')
-                    return redirect('login')
-        else:
-            messages.error(request, 'Password do not match')
-            return redirect('restaurant_register.html')
     else:
-        return render(request, 'accounts/restaurant_register.html')
+        return render(request, 'accounts/restaurant_register.html', {"user_form": user_form, "restaurant_form":restaurant_form})
 
 
 @login_required(login_url = 'login')

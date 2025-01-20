@@ -1,0 +1,14 @@
+.bg-blue {
+    background-color: #3f3f63;
+}
+
+.bg-pink {
+    color: white;
+    background-color: #EE5462;
+}
+
+.btn-pink:hover,
+.btn-pink:focus {
+    color: white;
+    background-color: #DA4F5D;
+}
