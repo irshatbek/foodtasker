@@ -6,7 +6,7 @@ from .models import Restaurant
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib.auth import authenticate, login
-
+from foodtaskerapp.views import home
 
 
 # Create your views here.
@@ -46,13 +46,13 @@ def register(request):
                 password = user_form.cleaned_data["password"]
             ))
             
-            return redirect(log_in)
+            return redirect(home)
 
     else:
         return render(request, 'accounts/restaurant_register.html', {"user_form": user_form, "restaurant_form":restaurant_form})
 
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'restaurant_log_in.html')
 def dashboard(request):
     user_inquiry = Restaurant.objects.order_by('-create_date').filter(user_id=request.user.id)
     # count = Contact.objects.order_by('-create_date').filter(user_id=request.user.id).count()
