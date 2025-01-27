@@ -10,3 +10,6 @@ def meal(request):
 def order(request):
     return render(request, 'restaurant/order.html', {})
 
+
+def reports(request):
+    return render(request, 'restaurant/reports.html', {})

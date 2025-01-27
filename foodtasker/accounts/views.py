@@ -8,28 +8,25 @@ from .forms import *
 from django.contrib.auth import authenticate, login
 from foodtaskerapp.views import home
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-
+from django.contrib import messages
 # Create your views here.
 
 def log_in(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            # Authenticate the user
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
-            
             if user is not None:
-                login(request, user)  # Log in the user
-                return redirect('dashboard')  # Replace 'dashboard' with your target URL pattern name
+                login(request, user)
+                return redirect('home')  # Replace with your target URL name
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
             messages.error(request, 'Invalid username or password.')
     else:
         form = AuthenticationForm()
-
     return render(request, 'accounts/restaurant_log_in.html', {'form': form})
 
 def register(request):
@@ -71,3 +68,8 @@ def logout(request):
         auth.logout(request)
         return redirect('home')
     return redirect('home')
+
+
+
+def accounts(request):
+    return render(request, 'restaurant/account.html', {})

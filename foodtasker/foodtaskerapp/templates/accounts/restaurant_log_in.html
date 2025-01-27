@@ -4,11 +4,18 @@
 {% block heading %} Restaurant - Sigh-in {% endblock %}
 {% block content %}
 
-    <form class="form-with-validation" action="/log_in/" method='post'>
+    <form class="form-with-validation" action="{% url 'log_in' %}" method="post">
     
         {% csrf_token %}
         {% bootstrap_form form %}
         <button class="form-submit">Submit</button>
     </form>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
 {% endblock %}
