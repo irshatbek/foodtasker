@@ -7,26 +7,30 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib.auth import authenticate, login
 from foodtaskerapp.views import home
-
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 # Create your views here.
 
 def log_in(request):
-    
     if request.method == 'POST':
-        user = request.POST['user']
-        password = request.POST['password']
-
-        user = auth.authenticate(user=user, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            messages.success(request, 'You are now logged in.')
-            return redirect('dashboard')
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            # Authenticate the user
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            
+            if user is not None:
+                login(request, user)  # Log in the user
+                return redirect('dashboard')  # Replace 'dashboard' with your target URL pattern name
+            else:
+                messages.error(request, 'Invalid username or password.')
         else:
-            messages.error(request, 'Invalid login credentials')
-            return redirect('restaurant_log_in.html')
-    return render(request, 'accounts/restaurant_log_in.html')
+            messages.error(request, 'Invalid username or password.')
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'accounts/restaurant_log_in.html', {'form': form})
 
 def register(request):
     user_form = UserForm()

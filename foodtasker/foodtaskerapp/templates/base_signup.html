@@ -6,12 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{% block title %}{% endblock %}</title>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
 </head>
 <body class="bg-blue">
 
@@ -24,7 +21,7 @@
         <div class="panel panel-body" >
           <div class="panel-body">
             <h3 class="text-center text-uppercase"><b>{% block heading %}{% endblock %}</b></h3>
-            <br>
+            <br/>
               {% block content %}{% endblock %}
           </div>
 

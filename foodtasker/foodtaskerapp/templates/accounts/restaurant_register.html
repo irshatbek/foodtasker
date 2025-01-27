@@ -1,13 +1,13 @@
 {% extends "base_signup.html" %}
-
+{% load bootstrap5 %}
 {% block title %}Sigh-up{% endblock %}
 {% block heading %} Restaurant - Sigh-up {% endblock %}
 {% block content %}
     {% block page %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ user_form }}
-        {{ restaurant_form }}
+        {% bootstrap_form user_form %}
+        {% bootstrap_form restaurant_form %}
         <button type="submit" class="btn btn-pink pull-right">Sigh-up</button>
     </form>
     {% endblock %}
