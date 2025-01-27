@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from .models import Restaurant
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout as auth_logout
 from foodtaskerapp.views import home
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
@@ -64,9 +64,9 @@ def dashboard(request):
     return render(request, 'accounts/dashboard.html', data)
 
 def logout(request):
-    if request.method == 'POST':
-        auth.logout(request)
-        return redirect('home')
+    # Log out the user
+    auth_logout(request)
+    # Redirect to home page (or any desired page)
     return redirect('home')
 
 
