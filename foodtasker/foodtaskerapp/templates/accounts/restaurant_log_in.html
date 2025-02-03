@@ -8,8 +8,9 @@
     
         {% csrf_token %}
         {% bootstrap_form form %}
-        <button class="form-submit">Submit</button>
+        <button type="submit" class="btn btn-danger">Submit</button>
     </form>
+    
     {% if messages %}
     <ul>
         {% for message in messages %}
@@ -17,5 +18,6 @@
         {% endfor %}
     </ul>
     {% endif %}
+<a href="{% url 'register' %}" class="btn btn-pink">Register</a>
 
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends "restaurant/home.html" %}
+
+{% load bootstrap5 %}
+{% block title %}Edit meal{% endblock %}
+{% block heading %} Restaurant - Edit Meal {% endblock %}
+{% block content %}
+    {% block page %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-pink pull-right">Update Meal</button>
+    </form>
+    {% endblock %}
+{% endblock %}

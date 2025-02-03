@@ -6,7 +6,6 @@ from .models import Restaurant
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib.auth import authenticate, login, logout as auth_logout
-from foodtaskerapp.views import home
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
 # Create your views here.
@@ -30,27 +29,37 @@ def log_in(request):
     return render(request, 'accounts/restaurant_log_in.html', {'form': form})
 
 def register(request):
-    user_form = UserForm()
-    restaurant_form = RestaurantForm()
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         restaurant_form = RestaurantForm(request.POST, request.FILES)
         
         if user_form.is_valid() and restaurant_form.is_valid():
-            new_user=User.objects.create_user(**user_form.cleaned_data)
+            new_user = User.objects.create_user(**user_form.cleaned_data)
             new_restaurant = restaurant_form.save(commit=False)
             new_restaurant.user = new_user
-            new_restaurant.save
+            new_restaurant.save()
             
-            login(request, authenticate(
-                username = user_form.cleaned_data["username"],
-                password = user_form.cleaned_data["password"]
-            ))
-            
-            return redirect(home)
-
+            user = authenticate(
+                username=user_form.cleaned_data["username"],
+                password=user_form.cleaned_data["password"]
+            )
+            if user is not None:
+                login(request, user)
+                return redirect('home')  # Ensure 'home' is the name of your home view
+        else:
+            # Handle invalid form data
+            return render(request, 'accounts/restaurant_register.html', {
+                "user_form": user_form,
+                "restaurant_form": restaurant_form
+            })
     else:
-        return render(request, 'accounts/restaurant_register.html', {"user_form": user_form, "restaurant_form":restaurant_form})
+        user_form = UserForm()
+        restaurant_form = RestaurantForm()
+        return render(request, 'accounts/restaurant_register.html', {
+            "user_form": user_form,
+            "restaurant_form": restaurant_form
+        })
+        
 
 
 @login_required(login_url = 'restaurant_log_in.html')

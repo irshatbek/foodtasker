@@ -14,16 +14,22 @@ body{
   color: white;
 }
 
-.btn-pink{
-  color: white;
-  background-color: #EE5462;
+.btn-pink {
+  background-color: #c90446 !important; /* Strong pink */
+  color: white !important; /* White text */
+  border: none !important;
+  padding: 10px 20px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
 }
 
 .btn-pink:hover,
-.btn-pink:focus{
-  color: white;
-  background-color: #DA4F5D;
+.btn-pink:focus {
+  background-color: #a7033a !important; /* Darker pink */
+  color: white !important;
 }
+
 
 /*side bar*/
 .sidebar{
@@ -102,6 +108,12 @@ body{
   border: none;
 }
 
+.table {
+  width: 100%;
+  max-width: 900px; /* Adjust if needed */
+  margin: auto; /* Centers the table */
+}
+
 .table > thead > tr > th,
 .table > thead > tr > td{
   vertical-align: middle;
@@ -109,4 +121,13 @@ body{
 .table,
 .table> thead >tr> th{
   border-color: #88a1b2;
+}
+
+.panel-body {
+  text-align: center;
+}
+
+.panel {
+  width: 80%;
+  margin: auto;
 }

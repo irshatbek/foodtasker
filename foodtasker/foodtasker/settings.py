@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "foodtaskerapp",
     "accounts",
     "bootstrap5",
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Whitenoise settings
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 LOGIN_REDIRECT_URL = '/'
